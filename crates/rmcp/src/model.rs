@@ -501,6 +501,32 @@ impl ErrorData {
     }
 }
 
+/// Error type for tool registration operations.
+///
+/// This error is returned when attempting to register a dynamic tool
+/// fails due to validation or conflict issues.
+#[derive(Debug, thiserror::Error, Clone)]
+pub enum ToolRegistrationError {
+    #[error("Tool '{0}' already registered")]
+    DuplicateTool(String),
+
+    #[error("Invalid tool name: {0}")]
+    InvalidName(String),
+
+    #[error("Invalid input schema: {0}")]
+    InvalidSchema(String),
+}
+
+/// Error type for tool lookup operations.
+///
+/// This error is returned when attempting to access or unregister
+/// a tool that doesn't exist.
+#[derive(Debug, thiserror::Error, Clone)]
+pub enum ToolNotFoundError {
+    #[error("Tool '{0}' not found")]
+    NotFound(String),
+}
+
 /// Represents any JSON-RPC message that can be sent or received.
 ///
 /// This enum covers all possible message types in the JSON-RPC protocol:
